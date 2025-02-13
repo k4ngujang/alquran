@@ -52,7 +52,18 @@ Jika Anda belum memiliki hosting dan domain, Anda bisa menyewanya melalui:
 1. **Login ke cPanel** hosting Anda.
 2. **Buka File Manager** dan masuk ke direktori `public_html`.
 3. **Upload semua file** (`alquran.html`, `surah-detail.html`, `bookmark.html`).
-4. Jika semua file sudah diunggah, akses website Anda melalui domain yang telah disewa.
+4. Jika semua file sudah diunggah, akses website Anda melalui domain yang telah disewa, misalnya:
+   - `https://domainanda.com/alquran` → untuk halaman utama
+   - `https://domainanda.com/surah-detail?id=1` → untuk halaman detail surah
+   - `https://domainanda.com/bookmark` → untuk halaman bookmark
+
+   ⚠ **Agar file dapat diakses tanpa `.html`, tambahkan aturan `.htaccess` pada hosting berbasis Apache:**
+   ```apache
+   RewriteEngine On
+   RewriteCond %{REQUEST_FILENAME}.html -f
+   RewriteRule ^([^/]+)/?$ $1.html [L]
+   ```
+   Aturan ini akan memastikan bahwa `alquran.html` dapat diakses cukup dengan `https://domainanda.com/alquran` tanpa perlu menulis `.html` di URL.
 
 ## 🔗 Koneksi Antar File
 
@@ -72,12 +83,6 @@ Pastikan setiap file saling terhubung dengan benar menggunakan path yang sesuai:
   ```html
   <a href="bookmark.html">Lihat Bookmark</a>
   ```
-- Jika Anda ingin memastikan file dapat diakses tanpa `.html`, Anda bisa menambahkan aturan `.htaccess` pada hosting berbasis Apache:
-  ```apache
-  RewriteEngine On
-  RewriteCond %{REQUEST_FILENAME}.html -f
-  RewriteRule ^([^/]+)/?$ $1.html [L]
-  ```
 
 ## 📢 Sumber Data
 
@@ -89,7 +94,8 @@ Silakan kontribusi dengan melakukan fork repository ini atau mengajukan pull req
 
 ## 📧 Kontak
 
-Jika ada pertanyaan atau masalah terkait proyek ini, silakan hubungi saya melalui repository GitHub, atau Telegram:
+Jika ada pertanyaan atau masalah terkait proyek ini, silakan hubungi saya melalui email, repository GitHub, atau Telegram:
+
 - 📬 Telegram: [@kangujang08](https://t.me/kangujang08)
 
 ---
