@@ -16,10 +16,10 @@ Silakan download atau clone repository ini ke dalam komputer Anda.
 
 ```sh
 # Clone repository
-git clone https://github.com/username/alquran-web.git
+git clone https://github.com/k4ngujang/alquran.git
 
 # Masuk ke folder proyek
-cd alquran-web
+cd alquran
 ```
 
 ### 2. Struktur File
@@ -89,7 +89,7 @@ Silakan kontribusi dengan melakukan fork repository ini atau mengajukan pull req
 
 ## 📧 Kontak
 
-Jika ada pertanyaan atau masalah terkait proyek ini, silakan hubungi saya melalui email, repository GitHub, atau Telegram:
+Jika ada pertanyaan atau masalah terkait proyek ini, silakan hubungi saya melalui repository GitHub, atau Telegram:
 - 📬 Telegram: [@kangujang08](https://t.me/kangujang08)
 
 ---
