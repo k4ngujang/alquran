@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Quran Digital - Ayat Tersimpan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri&display=swap">
+    <style>
+        @font-face {
+            font-family: 'LPMQ';
+            src: url('https://equran.id/font/LPMQ.ttf') format('truetype');
+        }
+        .font-quran {
+            font-family: 'LPMQ', 'Amiri', serif;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00B98E',
+                        secondary: '#E8F8F3',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-6 max-w-md">
+        <!-- Back Button -->
+        <a href="alquran" class="flex items-center text-primary mb-6 group hover:text-primary/80 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Kembali ke Beranda
+        </a>
+
+        <!-- Title -->
+        <h1 class="text-4xl font-bold text-gray-800 mb-6">Ayat Tersimpan</h1>
+
+        <!-- Bookmarked Verses Container -->
+        <div id="bookmarkedVerses" class="space-y-4">
+            <!-- Bookmarked verses will be populated here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-8">
+            <p class="text-gray-500">Belum ada ayat yang tersimpan</p>
+        </div>
+    </div>
+
+    <script>
+        function loadBookmarkedVerses() {
+            const bookmarks = JSON.parse(localStorage.getItem('quranBookmarks') || '[]');
+            const container = document.getElementById('bookmarkedVerses');
+            const emptyState = document.getElementById('emptyState');
+
+            if (bookmarks.length === 0) {
+                container.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            container.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            container.innerHTML = bookmarks.map(bookmark => `
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4" id="bookmark-${bookmark.surahNumber}-${bookmark.verseNumber}">
+                    <div class="flex justify-between items-start mb-4">
+                        <h2 class="text-xl font-semibold text-primary">
+                            ${bookmark.surahName} - Ayat ${bookmark.verseNumber}
+                        </h2>
+                        <button onclick="removeBookmark(${bookmark.surahNumber}, ${bookmark.verseNumber})" 
+                                class="text-red-500 hover:text-red-600 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="text-right font-quran text-2xl leading-loose mb-4">
+                        ${bookmark.arabicText}
+                    </div>
+                    <p class="text-gray-800 mb-4">
+                        ${bookmark.translation}
+                    </p>
+                    <a href="surah-detail?id=${bookmark.surahNumber}&verse=${bookmark.verseNumber}" 
+                       class="text-primary hover:text-primary-dark inline-block transition-colors">
+                        Buka Surat
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        function removeBookmark(surahNumber, verseNumber) {
+            let bookmarks = JSON.parse(localStorage.getItem('quranBookmarks') || '[]');
+            bookmarks = bookmarks.filter(b => !(b.surahNumber === surahNumber && b.verseNumber === verseNumber));
+            localStorage.setItem('quranBookmarks', JSON.stringify(bookmarks));
+            
+            // Remove with animation
+            const element = document.getElementById(`bookmark-${surahNumber}-${verseNumber}`);
+            element.style.transition = 'all 0.3s ease';
+            element.style.opacity = '0';
+            element.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                loadBookmarkedVerses();
+            }, 300);
+        }
+
+        // Initial load
+        loadBookmarkedVerses();
+    </script>
+</body>
+</html>
+
