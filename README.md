@@ -94,7 +94,7 @@ Silakan kontribusi dengan melakukan fork repository ini atau mengajukan pull req
 
 ## 📧 Kontak
 
-Jika ada pertanyaan atau masalah terkait proyek ini, silakan hubungi saya melalui email, repository GitHub, atau Telegram:
+Jika ada pertanyaan atau masalah terkait proyek ini, silakan hubungi saya melalui repository GitHub, atau Telegram:
 
 - 📬 Telegram: [@kangujang08](https://t.me/kangujang08)
 
